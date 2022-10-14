@@ -13,6 +13,7 @@ class ConfirmViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var majorTextField: UITextField!
     @IBOutlet weak var studentIDTextField: UITextField!
+    @IBOutlet weak var toggle: UISwitch!
     var text = ""
     var name = ""   // 이름
     var studentID = ""  // 학번
@@ -44,21 +45,26 @@ class ConfirmViewController: UIViewController, UITextFieldDelegate {
     
     // 로그인 버튼 클릭 시 View 이동과 함께 데이터 전달(이 데이터는 UserDefaults로 로컬에 저장됨)
     @IBAction func clickButton(_ sender: UIButton) {
-        
+        UserDefaults.standard.set(toggle.isOn, forKey: "AutoLogin")
+
 //        var student = Student(name: name, studentID: studentID, major: major)
 //        print(student)
 //        guard let vc = storyboard?.instantiateViewController(withIdentifier: "MapViewController") as? MapViewController else { return }
 //        vc.std = student
     }
     
+    @IBAction func switchAction(_ sender: UISwitch) {
+        UserDefaults.standard.set(toggle.isOn, forKey: "AutoLogin")
+    }
+    
     // MARK: - 전달받은 텍스트에서 필요한 정보를 추출하는 메서드
     func separatedData(_ str: String) {
         print(str)
-        for s in str.components(separatedBy: "\n") {
+        for st in str.components(separatedBy: "\n") {
+            let s = st.replacingOccurrences(of: " ", with: "")
             if s.prefix(2) == "이름" || (s.count == 3 && s != "학생증") || (s.count == 3 && s != "학생중") {
-                let extractedStr = s.components(separatedBy: " ")
-                if extractedStr.count > 1 {
-                    name = extractedStr[2]
+                if s.prefix(2) == "이름" {    // 모바일 학생증에 대한 처리
+                    name = String(s.replacingOccurrences(of: " ", with: "")[s.index(s.startIndex, offsetBy: 3)...])
                 }
                 else {
                     name = s
@@ -66,18 +72,17 @@ class ConfirmViewController: UIViewController, UITextFieldDelegate {
             }
             
             if s.suffix(2) == "학부" || s.suffix(2) == "학과" { // 전공 추출
-                let extractedStr = s.components(separatedBy: " ")
-                if extractedStr.count > 1 { // 모바일 학생증에 대한 처리
+                if s.prefix(2) == "소속" { // 모바일 학생증에 대한 처리
 //                    major = accurateMajor(extractedStr[1])
-                    major = String(s.replacingOccurrences(of: " ", with: "")[s.index(s.startIndex, offsetBy: 3)...])
+                    major = accurateMajor(String(s.replacingOccurrences(of: " ", with: "")[s.index(s.startIndex, offsetBy: 3)...]))
                 }
                 else {
 //                    major = accurateMajor(s)
-                    major = s
+                    major = accurateMajor(s)
                 }
                 continue
             }
-            let extractedStr = s.components(separatedBy: " ")
+            let extractedStr = st.components(separatedBy: " ")
             if extractedStr.count > 1 && extractedStr[1].count == 8 {   // 학번 추출
                 studentID = extractedStr[1]
             }
@@ -89,18 +94,27 @@ class ConfirmViewController: UIViewController, UITextFieldDelegate {
     //MARK: - 전공 인식 정확성 향상 메서드
     // 전공이 한글이므로 정확성 문제로 인하여 현재 존재하는 학과와 비교하면서 가장 유사한 전공을 리턴한다.
     func accurateMajor(_ str: String) -> String {
+        var maxCnt = 0
+        var maxStr = ""
         for i in comparedMajor.allMajors {
             var cnt = 0
-            for j in str {
-                if String(i) == String(j) {
-                   cnt += 1
+            if i.count != str.count {
+                continue
+            }
+            for k in i {
+                for j in str {
+                    if String(k) == String(j) {
+                       cnt += 1
+                    }
+                }
+                if cnt > maxCnt {
+                    print(maxStr)
+                    maxCnt = cnt
+                    maxStr = i
                 }
             }
-            if cnt > str.count/2 {
-                return i
-            }
         }
-        return "Not Found"
+        return maxStr
     }
     
     // 화면을 터치하여 키보드 내리기

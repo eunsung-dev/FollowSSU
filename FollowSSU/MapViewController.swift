@@ -13,6 +13,7 @@ class MapViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("자동 로그인 여부: \(UserDefaults.standard.bool(forKey: "AutoLogin"))")
         // 구조체 단위로 학생 정보를 UserDefaults 통해 로컬에 저장
         let encoder = JSONEncoder()
         if let encoded = try? encoder.encode(std) {
