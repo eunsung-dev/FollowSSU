@@ -92,13 +92,13 @@
 				913E340428ED92A90048694B /* SceneDelegate.swift */,
 				913E340628ED92A90048694B /* ViewController.swift */,
 				9163256D28F00779001DC3B7 /* ConfirmViewController.swift */,
+				91693EFB28F94749004AC0CB /* MapViewController.swift */,
 				913E340828ED92A90048694B /* Main.storyboard */,
 				913E340B28ED92AA0048694B /* Assets.xcassets */,
 				913E340D28ED92AA0048694B /* LaunchScreen.storyboard */,
 				913E341028ED92AA0048694B /* Info.plist */,
 				91EFC85B28F9376800C057A2 /* Major.swift */,
 				91693EF928F9453E004AC0CB /* Student.swift */,
-				91693EFB28F94749004AC0CB /* MapViewController.swift */,
 			);
 			path = FollowSSU;
 			sourceTree = "<group>";

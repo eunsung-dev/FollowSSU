@@ -154,6 +154,9 @@
                                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GgK-C4-Pf3">
                                                 <rect key="frame" x="168" y="49" width="49" height="31"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <connections>
+                                                    <action selector="switchAction:" destination="hHn-3t-L52" eventType="valueChanged" id="zFd-TD-Ili"/>
+                                                </connections>
                                             </switch>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="자동 로그인" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aTI-CQ-jZi">
                                                 <rect key="frame" x="18" y="54" width="78" height="21"/>
@@ -207,6 +210,7 @@
                         <outlet property="majorTextField" destination="qSw-b5-hX3" id="V58-aa-7yE"/>
                         <outlet property="nameTextField" destination="mZV-Wu-9fZ" id="B97-yV-o0c"/>
                         <outlet property="studentIDTextField" destination="hkX-qK-Bu3" id="Ogl-br-NTq"/>
+                        <outlet property="toggle" destination="GgK-C4-Pf3" id="MXw-5U-LgJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eue-NE-pK9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
