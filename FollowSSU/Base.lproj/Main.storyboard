@@ -224,10 +224,63 @@
                     <view key="view" contentMode="scaleToFill" id="qRW-HA-9Dx">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="acn-jI-YMo" customClass="NMFMapView" customModule="FollowSSU">
+                                <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uaP-cl-xZy">
+                                <rect key="frame" x="0.0" y="47" width="390" height="35"/>
+                                <subviews>
+                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="IJq-Ls-wvl">
+                                        <rect key="frame" x="30" y="0.0" width="235" height="35"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MyB-Dv-bGO">
+                                        <rect key="frame" x="285" y="0.0" width="75" height="35"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                                        <connections>
+                                            <action selector="searchPressed:" destination="8Xo-Gi-TW2" eventType="touchUpInside" id="MDh-lD-4we"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="IJq-Ls-wvl" firstAttribute="centerY" secondItem="uaP-cl-xZy" secondAttribute="centerY" id="29c-mA-UjC"/>
+                                    <constraint firstAttribute="height" constant="35" id="9aI-PI-6oa"/>
+                                    <constraint firstItem="IJq-Ls-wvl" firstAttribute="top" secondItem="uaP-cl-xZy" secondAttribute="top" id="TYv-Gh-1OB"/>
+                                    <constraint firstAttribute="bottom" secondItem="MyB-Dv-bGO" secondAttribute="bottom" id="boI-DM-Aud"/>
+                                    <constraint firstItem="IJq-Ls-wvl" firstAttribute="leading" relation="lessThanOrEqual" secondItem="uaP-cl-xZy" secondAttribute="leading" constant="30" id="cOW-to-ec8"/>
+                                    <constraint firstItem="MyB-Dv-bGO" firstAttribute="top" secondItem="uaP-cl-xZy" secondAttribute="top" id="dAD-nT-WK4"/>
+                                    <constraint firstItem="MyB-Dv-bGO" firstAttribute="centerY" secondItem="uaP-cl-xZy" secondAttribute="centerY" id="msc-sT-8Vy"/>
+                                    <constraint firstItem="MyB-Dv-bGO" firstAttribute="leading" relation="lessThanOrEqual" secondItem="IJq-Ls-wvl" secondAttribute="trailing" constant="20" id="phq-s7-o7b"/>
+                                    <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="MyB-Dv-bGO" secondAttribute="trailing" constant="30" id="tJw-Z8-l87"/>
+                                    <constraint firstAttribute="bottom" secondItem="IJq-Ls-wvl" secondAttribute="bottom" id="vtz-xp-YnY"/>
+                                </constraints>
+                            </view>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="NBf-ge-bWQ"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="uaP-cl-xZy" firstAttribute="centerX" secondItem="qRW-HA-9Dx" secondAttribute="centerX" id="6HP-Is-DCw"/>
+                            <constraint firstItem="uaP-cl-xZy" firstAttribute="leading" secondItem="NBf-ge-bWQ" secondAttribute="leading" id="K4S-GL-PWS"/>
+                            <constraint firstAttribute="bottom" secondItem="acn-jI-YMo" secondAttribute="bottom" id="LxT-TQ-HV2"/>
+                            <constraint firstItem="uaP-cl-xZy" firstAttribute="top" secondItem="NBf-ge-bWQ" secondAttribute="top" id="Qay-Vj-sS7"/>
+                            <constraint firstAttribute="trailing" secondItem="acn-jI-YMo" secondAttribute="trailing" id="cPB-mn-fhB"/>
+                            <constraint firstItem="acn-jI-YMo" firstAttribute="leading" secondItem="qRW-HA-9Dx" secondAttribute="leading" id="lfN-cQ-Cy3"/>
+                            <constraint firstItem="acn-jI-YMo" firstAttribute="top" secondItem="qRW-HA-9Dx" secondAttribute="top" id="pb9-mD-hx2"/>
+                            <constraint firstItem="acn-jI-YMo" firstAttribute="centerY" secondItem="qRW-HA-9Dx" secondAttribute="centerY" id="rKy-zT-fL6"/>
+                            <constraint firstItem="NBf-ge-bWQ" firstAttribute="trailing" secondItem="uaP-cl-xZy" secondAttribute="trailing" id="wL5-6b-iBo"/>
+                            <constraint firstItem="acn-jI-YMo" firstAttribute="centerX" secondItem="qRW-HA-9Dx" secondAttribute="centerX" id="zOr-DZ-wpO"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="kPZ-6Y-kxW"/>
+                    <connections>
+                        <outlet property="map" destination="acn-jI-YMo" id="pCo-97-W6i"/>
+                        <outlet property="searchTextField" destination="IJq-Ls-wvl" id="7yv-CD-DON"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zTX-Uz-hta" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

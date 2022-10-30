@@ -146,7 +146,6 @@ extension ViewController: VNDocumentCameraViewControllerDelegate {
         recognizeTextRequest.automaticallyDetectsLanguage = true
         
         print(try! VNRecognizeTextRequest().supportedRecognitionLanguages())
-        //            recognizeTextRequest.recognitionLevel = .accurate
         
         for image in images {
             let requestHandler = VNImageRequestHandler(cgImage: image, options: [:])
