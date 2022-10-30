@@ -24,8 +24,6 @@ class ConfirmViewController: UIViewController, UITextFieldDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-//        self.segueTextField.text = text // 전달받은 텍스트를 저장함.
-//        segueTextField.numberOfLines = .max
         separatedData(text)
         nameTextField.text = name
         studentIDTextField.text = studentID
@@ -46,11 +44,6 @@ class ConfirmViewController: UIViewController, UITextFieldDelegate {
     // 로그인 버튼 클릭 시 View 이동과 함께 데이터 전달(이 데이터는 UserDefaults로 로컬에 저장됨)
     @IBAction func clickButton(_ sender: UIButton) {
         UserDefaults.standard.set(toggle.isOn, forKey: "AutoLogin")
-
-//        var student = Student(name: name, studentID: studentID, major: major)
-//        print(student)
-//        guard let vc = storyboard?.instantiateViewController(withIdentifier: "MapViewController") as? MapViewController else { return }
-//        vc.std = student
     }
     
     @IBAction func switchAction(_ sender: UISwitch) {
@@ -73,11 +66,9 @@ class ConfirmViewController: UIViewController, UITextFieldDelegate {
             
             if s.suffix(2) == "학부" || s.suffix(2) == "학과" { // 전공 추출
                 if s.prefix(2) == "소속" { // 모바일 학생증에 대한 처리
-//                    major = accurateMajor(extractedStr[1])
                     major = accurateMajor(String(s.replacingOccurrences(of: " ", with: "")[s.index(s.startIndex, offsetBy: 3)...]))
                 }
                 else {
-//                    major = accurateMajor(s)
                     major = accurateMajor(s)
                 }
                 continue
@@ -87,8 +78,6 @@ class ConfirmViewController: UIViewController, UITextFieldDelegate {
                 studentID = extractedStr[1]
             }
         }
-//        print("전공: \(major)")
-//        print("학번: \(studentID)")
     }
     
     //MARK: - 전공 인식 정확성 향상 메서드
