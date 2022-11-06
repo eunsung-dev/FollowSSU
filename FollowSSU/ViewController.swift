@@ -9,6 +9,8 @@ import UIKit
 import VisionKit
 import Vision
 import PhotosUI // WWDC20 참고. UIImagePickerController를 대체.
+import AVFoundation
+import CoreLocation
 
 class ViewController: UIViewController {
     
@@ -17,6 +19,13 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        // 자동 로그인 기능 구현
+        if UserDefaults.standard.bool(forKey: "AutoLogin") {
+            guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "MapViewController") else { return }
+            self.present(vc, animated: true)
+        }
+        checkCameraPermission() // 카메라 사용 권한
+        checkLocationPermission()   // 위치 정보 사용 권한
     }
     //MARK: - 학생증을 스캔하여 로그인 버튼 클릭 시
     @IBAction func onClick(_ sender: UIButton) {
@@ -53,8 +62,8 @@ class ViewController: UIViewController {
                 
                 textString += "\n\(topCandidate.string)"
                 
-//                DispatchQueue.main.async {
-//                }
+                //                DispatchQueue.main.async {
+                //                }
             }
             self.sendData(textString)
             print(textString)
@@ -85,6 +94,40 @@ class ViewController: UIViewController {
         }
     }
     
+    
+    // MARK: - 카메라 권한 요청
+    func checkCameraPermission(){
+        print("")
+        print("===============================")
+        print("[MainController > checkCameraPermission() : 카메라 권한 요청 실시]")
+        print("===============================")
+        print("")
+        AVCaptureDevice.requestAccess(for: .video, completionHandler: { (granted: Bool) in
+            if granted {
+                print("")
+                print("===============================")
+                print("[MainController > checkCameraPermission() : 카메라 권한 허용 상태]")
+                print("===============================")
+                print("")
+            } else {
+                print("")
+                print("===============================")
+                print("[MainController > checkCameraPermission() : 카메라 권한 거부 상태]")
+                print("===============================")
+                print("")
+//                self.permissionNoArray.append("카메라")
+            }
+        })
+    }
+    
+    // MARK: - 위치 정보 권한 요청
+    func checkLocationPermission() {
+        let locationManager: CLLocationManager?
+        locationManager = CLLocationManager()
+        locationManager?.requestWhenInUseAuthorization()
+        locationManager?.startUpdatingLocation()
+    }
+    
 }
 
 extension ViewController: PHPickerViewControllerDelegate {
@@ -95,7 +138,7 @@ extension ViewController: PHPickerViewControllerDelegate {
             itemProvider.loadObject(ofClass: UIImage.self) { (image, error) in // 로드 할 수 있으면 로드를 합니다.
                 DispatchQueue.main.async {
                     self.setupVisionTextRecognizeImage(image: image as? UIImage)
-//                    self.myImageView.image = image as? UIImage // 5
+                    //                    self.myImageView.image = image as? UIImage // 5
                 }
             }
         } else {
