@@ -8,7 +8,7 @@
 import Foundation
 
 struct Major {
-    var allMajors: [String] = [
+    let allMajors: [String] = [
         "기독교학과",
         "영어영문학과",
         "불어불문학과",

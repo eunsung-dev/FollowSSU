@@ -16,6 +16,7 @@
 		9163256E28F00779001DC3B7 /* ConfirmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9163256D28F00779001DC3B7 /* ConfirmViewController.swift */; };
 		91693EFA28F9453E004AC0CB /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91693EF928F9453E004AC0CB /* Student.swift */; };
 		91693EFC28F94749004AC0CB /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91693EFB28F94749004AC0CB /* MapViewController.swift */; };
+		919F8E11290E76F700FBEF6C /* Architecture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 919F8E10290E76F700FBEF6C /* Architecture.swift */; };
 		91EFC85C28F9376800C057A2 /* Major.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91EFC85B28F9376800C057A2 /* Major.swift */; };
 		CB7F4DA2F1DF08E504C9568D /* Pods_FollowSSU.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AE282850B72A1241D49A9B9 /* Pods_FollowSSU.framework */; };
 /* End PBXBuildFile section */
@@ -35,6 +36,7 @@
 		9163256D28F00779001DC3B7 /* ConfirmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmViewController.swift; sourceTree = "<group>"; };
 		91693EF928F9453E004AC0CB /* Student.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
 		91693EFB28F94749004AC0CB /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		919F8E10290E76F700FBEF6C /* Architecture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Architecture.swift; sourceTree = "<group>"; };
 		91EFC85B28F9376800C057A2 /* Major.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Major.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -98,6 +100,7 @@
 				913E340D28ED92AA0048694B /* LaunchScreen.storyboard */,
 				913E341028ED92AA0048694B /* Info.plist */,
 				91EFC85B28F9376800C057A2 /* Major.swift */,
+				919F8E10290E76F700FBEF6C /* Architecture.swift */,
 				91693EF928F9453E004AC0CB /* Student.swift */,
 			);
 			path = FollowSSU;
@@ -218,6 +221,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				919F8E11290E76F700FBEF6C /* Architecture.swift in Sources */,
 				913E340728ED92A90048694B /* ViewController.swift in Sources */,
 				91693EFA28F9453E004AC0CB /* Student.swift in Sources */,
 				913E340328ED92A90048694B /* AppDelegate.swift in Sources */,
@@ -376,10 +380,10 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FollowSSU/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
-				INFOPLIST_KEY_NSCameraUsageDescription = "카메라 권한에 접근하려고 합니다.";
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "위치정보 권한이 필요합니다.";
-				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "위치정보 권한이 필요합니다.";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "위치정보 권한이 필요합니다.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "카메라 사용 권한을 허용해주세요";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "위치정보 권한을 허용해주세요";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "위치정보 권한을 허용해주세요";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "위치정보 권한을 허용해주세요";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -411,10 +415,10 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FollowSSU/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
-				INFOPLIST_KEY_NSCameraUsageDescription = "카메라 권한에 접근하려고 합니다.";
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "위치정보 권한이 필요합니다.";
-				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "위치정보 권한이 필요합니다.";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "위치정보 권한이 필요합니다.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "카메라 사용 권한을 허용해주세요";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "위치정보 권한을 허용해주세요";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "위치정보 권한을 허용해주세요";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "위치정보 권한을 허용해주세요";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;

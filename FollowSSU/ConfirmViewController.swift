@@ -52,7 +52,7 @@ class ConfirmViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: - 전달받은 텍스트에서 필요한 정보를 추출하는 메서드
     func separatedData(_ str: String) {
-        print(str)
+//        print(str)
         for st in str.components(separatedBy: "\n") {
             let s = st.replacingOccurrences(of: " ", with: "")
             if s.prefix(2) == "이름" || (s.count == 3 && s != "학생증") || (s.count == 3 && s != "학생중") {
@@ -97,7 +97,7 @@ class ConfirmViewController: UIViewController, UITextFieldDelegate {
                     }
                 }
                 if cnt > maxCnt {
-                    print(maxStr)
+//                    print(maxStr)
                     maxCnt = cnt
                     maxStr = i
                 }

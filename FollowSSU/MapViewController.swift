@@ -9,25 +9,37 @@ import UIKit
 import NMapsMap
 import CoreLocation
 
-class MapViewController: UIViewController {
+class MapViewController: UIViewController, UISheetPresentationControllerDelegate {
     @IBOutlet weak var map: NMFMapView!
     @IBOutlet weak var searchTextField: UITextField!
-    var std: Student = Student()
+    var std: Student = Student()    // 학생 구조체 단위로 저장하기 위해
     let defaults = UserDefaults.standard
-    var searchName: String = ""
+    var searchContent: String = ""
+    let architecture: Architecture = Architecture() // 강의실 번호를 매칭하기 위해
     
     var locationManager = CLLocationManager()
+    
+    var architectureNum = ""    // 건물 번호
+    var lectureNum = "" // 강의실 번호
+    
+    var markers: [NMFMarker] = []   // 보여줄 마커를 저장
+    
+    var mapView: NMFMapView = NMFMapView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // 뒤로 가기 버튼이 필요없으므로
         self.navigationItem.hidesBackButton = true
         
+        
         print("자동 로그인 여부: \(UserDefaults.standard.bool(forKey: "AutoLogin"))")
-        // 구조체 단위로 학생 정보를 UserDefaults 통해 로컬에 저장
-        let encoder = JSONEncoder()
-        if let encoded = try? encoder.encode(std) {
-            defaults.set(encoded, forKey: "Info")
+        // 기존에 자동 로그인을 선택했다면 다시 저장할 필요가 없으므로
+        if !(std.name.isEmpty || std.major.isEmpty || std.studentID.isEmpty) {
+            // 구조체 단위로 학생 정보를 UserDefaults 통해 로컬에 저장
+            let encoder = JSONEncoder()
+            if let encoded = try? encoder.encode(std) {
+                defaults.set(encoded, forKey: "Info")
+            }
         }
         if let savedPerson = defaults.object(forKey: "Info") as? Data {
             let decoder = JSONDecoder()
@@ -42,8 +54,9 @@ class MapViewController: UIViewController {
         
         locationManager.requestLocation()
         
-        let mapView = NMFMapView(frame: map.frame)
+        mapView = NMFMapView(frame: map.frame)
         map.addSubview(mapView)
+        
         
         mapView.touchDelegate = self
         mapView.zoomLevel = 17.5
@@ -58,12 +71,12 @@ class MapViewController: UIViewController {
 
 extension MapViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if let location = locations.last {
-            let lat = location.coordinate.latitude
-            let lon = location.coordinate.longitude
-            print("lat: ",lat)
-            print("lon: ",lon)
-        }
+        //        if let location = locations.last {
+        //            let lat = location.coordinate.latitude
+        //            let lon = location.coordinate.longitude
+        //            print("lat: ",lat)
+        //            print("lon: ",lon)
+        //        }
     }
     
     // 반드시 있어야 함.
@@ -95,22 +108,129 @@ extension MapViewController: CLLocationManagerDelegate {
 
 //MARK: - MapView Touch Delegate
 
- extension MapViewController: NMFMapViewTouchDelegate {
-     func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
-         print("\(latlng.lat), \(latlng.lng)")
-     }
- }
+extension MapViewController: NMFMapViewTouchDelegate {
+    func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
+        print("\(latlng.lat), \(latlng.lng)")
+    }
+}
 
 //MARK: - UITextFieldDelegate
 
 extension MapViewController: UITextFieldDelegate {
     @IBAction func searchPressed(_ sender: UIButton) {
-            searchTextField.endEditing(true)
-            print(searchTextField.text!)
+        searchTextField.endEditing(true)
+        print("searchTextField: \(searchTextField.text!)")
+        let length = searchTextField.text!.count    // searchTextField의 길이
+        if length == 5 {    // 5글자라면 모두 숫자이어야 한다.
+            if Int(searchTextField.text!) != nil {  // 모두 숫자인 경우
+                if checkArchitectureNum() { // 올바른 건물 번호라면 해당 건물에 마커 생성
+                    print("5글자 올바른 건물 번호입니다.")
+                    createMarker()
+                }
+            }
+            else {
+                showAlert()
+            }
+            
         }
+        else if length == 6 {   // 6글자라면 지하에 있는 강의실이므로 지정된 위치에 B가 존재해야 한다.
+            if searchTextField.text!.filter({$0.isNumber == true}).count == length-1  && searchTextField.text![2] == "B" {
+                if checkArchitectureNum() {
+                    print("6글자 올바른 건물 번호입니다.")
+                    createMarker()
+                }
+            }
+            else {
+                showAlert()
+            }
+        }
+        else {  // alert 메서드 호출
+            showAlert()
+        }
+    }
+    
+    // alert을 띄워주는 메서드
+    func showAlert() {
+        let alert = UIAlertController(title: "잘못된 번호", message: "번호가 올바르지 않습니다.", preferredStyle: UIAlertController.Style.alert)
+        let defaultAction = UIAlertAction(title: "확인", style: .default, handler: nil)
+        alert.addAction(defaultAction)
+        present(alert, animated: true, completion: nil)
+    }
+    
+    // 올바른 건물번호를 체크하는 메서드
+    func checkArchitectureNum() -> Bool {
+        let separatedStr = searchTextField.text!.map{String($0)}
+        architectureNum = separatedStr[0..<2].joined()  // 건물 번호 분리
+        lectureNum = separatedStr[2..<separatedStr.count].joined()  // 강의실 번호 분리
+        if Int(architectureNum)! > 25 {   // 건물 번호가 25가 넘으면 잘못된 번호이므로 alert show
+            showAlert()
+            return false
+        }
+        return true
+    }
+    
+    // 마커를 생성하는 메서드
+    func createMarker() {
+        print("건물 번호: \(architectureNum)")
+        print("강의실: \(lectureNum)")
+        // 기존에 마커가 존재하면 있던 마커 삭제
+        for i in markers {
+            i.mapView = nil
+        }
+        markers = []    // 마커를 저장하는 배열 초기화
+        let marker = NMFMarker()
+        // 마커 위치 지정
+        marker.position = NMGLatLng(lat: architecture.positions[Int(architectureNum)!-1].lat, lng: architecture.positions[Int(architectureNum)!-1].lng)
+        // 마커 캡션 달기
+        marker.captionText = architecture.allArchitectures[Int(architectureNum)!-1]
+        // 마커 터치 이벤트
+        marker.touchHandler = { (overlay: NMFOverlay) -> Bool in
+            print("\(self.architectureNum)번 건물 마커 터치")
+            // 해당 마커를 클릭 시 해당 건물에 대한 정보와 강의실 번호를 알려주는 Modal View 생성
+            let vc = UIViewController()
+            vc.view.backgroundColor = .white
+            vc.modalPresentationStyle = .pageSheet
+            let testLabel = UILabel()
+            testLabel.text = "건물: \(self.architecture.allArchitectures[Int(self.architectureNum)!-1])\n강의실: \(self.lectureNum)호"
+            testLabel.numberOfLines = 2
+            testLabel.translatesAutoresizingMaskIntoConstraints = false // 제약을 받아들일 준비
+            vc.view.addSubview(testLabel)
+
+            let testImage = UIImageView(image: UIImage(named: String(Int(self.architectureNum)!)))
+            testImage.translatesAutoresizingMaskIntoConstraints = false
+            vc.view.addSubview(testImage)
+            testImage.topAnchor.constraint(equalTo: testLabel.topAnchor, constant: 60).isActive = true
+
+            if let sheet = vc.sheetPresentationController {
+                //지원할 크기 지정
+                sheet.detents = [.medium(), .large()]
+                //크기 변하는거 감지
+                sheet.delegate = self
+                //시트 상단에 그래버 표시 (기본 값은 false)
+                sheet.prefersGrabberVisible = true
+                //처음 크기 지정 (기본 값은 가장 작은 크기)
+                //sheet.selectedDetentIdentifier = .large
+                //뒤 배경 흐리게 제거 (기본 값은 모든 크기에서 배경 흐리게 됨)
+                //sheet.largestUndimmedDetentIdentifier = .medium
+            }
+            self.present(vc, animated: true, completion: nil)
+
+            return true // 이벤트 소비, -mapView:didTapMap:point 이벤트는 발생하지 않음
+        }
+        markers.append(marker)
+        // 해당 건물에 대한 마커 생성
+        for i in markers {
+            i.mapView = mapView
+        }
+        // 마커로 카메라 이동
+        let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: architecture.positions[Int(architectureNum)!-1].lat, lng: architecture.positions[Int(architectureNum)!-1].lng))
+        cameraUpdate.animation = .easeIn
+        mapView.moveCamera(cameraUpdate)
+    }
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         searchTextField.endEditing(true)
-        print(searchTextField.text!)
+        //        print(searchTextField.text!)
         return true
     }
     
@@ -125,15 +245,24 @@ extension MapViewController: UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         if let name = searchTextField.text {
-            searchName = name
-            print("저장: \(searchName)")
+            searchContent = name
+            print("저장된 내용: \(searchContent)")
         }
-        searchTextField.text = ""
+        //        searchTextField.text = ""
     }
-
+    
     // 텍스트필드 밖을 클릭할 때 키보드를 내린다.
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?){
-         self.view.endEditing(true)
-   }
+        self.view.endEditing(true)
+    }
+    
+}
 
+// MARK: - UISheetPresentationControllerDelegate
+
+extension ViewController: UISheetPresentationControllerDelegate {
+    func sheetPresentationControllerDidChangeSelectedDetentIdentifier(_ sheetPresentationController: UISheetPresentationController) {
+        //크기 변경 됐을 경우
+        print(sheetPresentationController.selectedDetentIdentifier == .large ? "large" : "medium")
+    }
 }
