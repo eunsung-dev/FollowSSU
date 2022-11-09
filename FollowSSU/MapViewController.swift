@@ -114,7 +114,7 @@ extension MapViewController: NMFMapViewTouchDelegate {
     }
 }
 
-//MARK: - UITextFieldDelegate
+//MARK: - UITextFieldDelegate, 강의실 찾기 기능
 
 extension MapViewController: UITextFieldDelegate {
     @IBAction func searchPressed(_ sender: UIButton) {
@@ -137,6 +137,7 @@ extension MapViewController: UITextFieldDelegate {
             if searchTextField.text!.filter({$0.isNumber == true}).count == length-1  && searchTextField.text![2] == "B" {
                 if checkArchitectureNum() {
                     print("6글자 올바른 건물 번호입니다.")
+                    lectureNum = "지하\(lectureNum.map{String($0)}[1...].joined())"
                     createMarker()
                 }
             }
@@ -256,6 +257,25 @@ extension MapViewController: UITextFieldDelegate {
         self.view.endEditing(true)
     }
     
+}
+
+// MARK: - 공지사항 불러오기 기능
+extension MapViewController {
+    @IBAction func noticePressed(_ sender: UIButton) {
+        print("notice pressed")
+    }
+}
+
+// MARK: - 로그아웃 기능
+extension MapViewController {
+    @IBAction func logoutPressed(_ sender: UIButton) {
+        print("logout pressed")
+        UserDefaults.standard.set(false, forKey: "AutoLogin")
+        self.navigationController?.popToRootViewController(animated: true)
+        // 앱 처음 시작 시 루트 뷰 설정해줘야할듯
+//        guard let vc = self.storyboard?.instantiateViewController(identifier: "RootViewController") as? ViewController else {return}
+//        (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootVC(vc, animated: false)
+    }
 }
 
 // MARK: - UISheetPresentationControllerDelegate
