@@ -8,4 +8,5 @@ target 'FollowSSU' do
   # Pods for FollowSSU
   pod 'RxSwift'
   pod 'NMapsMap'
+  pod 'SwiftSoup'
 end

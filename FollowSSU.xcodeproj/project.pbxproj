@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9101115F29194CD300B0A4BE /* NoticeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9101115E29194CD300B0A4BE /* NoticeViewController.swift */; };
+		9101116129195E1500B0A4BE /* Notice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9101116029195E1500B0A4BE /* Notice.swift */; };
+		91011163291A1E2B00B0A4BE /* NoticeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91011162291A1E2B00B0A4BE /* NoticeTableViewCell.swift */; };
+		91011165291B816E00B0A4BE /* ContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91011164291B816E00B0A4BE /* ContentViewController.swift */; };
 		913E340328ED92A90048694B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913E340228ED92A90048694B /* AppDelegate.swift */; };
 		913E340528ED92A90048694B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913E340428ED92A90048694B /* SceneDelegate.swift */; };
 		913E340728ED92A90048694B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913E340628ED92A90048694B /* ViewController.swift */; };
@@ -16,6 +20,7 @@
 		9163256E28F00779001DC3B7 /* ConfirmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9163256D28F00779001DC3B7 /* ConfirmViewController.swift */; };
 		91693EFA28F9453E004AC0CB /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91693EF928F9453E004AC0CB /* Student.swift */; };
 		91693EFC28F94749004AC0CB /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91693EFB28F94749004AC0CB /* MapViewController.swift */; };
+		9178083C29179919009BA59B /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9178083B29179919009BA59B /* WebViewController.swift */; };
 		919F8E11290E76F700FBEF6C /* Architecture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 919F8E10290E76F700FBEF6C /* Architecture.swift */; };
 		91EFC85C28F9376800C057A2 /* Major.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91EFC85B28F9376800C057A2 /* Major.swift */; };
 		CB7F4DA2F1DF08E504C9568D /* Pods_FollowSSU.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AE282850B72A1241D49A9B9 /* Pods_FollowSSU.framework */; };
@@ -25,6 +30,10 @@
 		0D13F5DBF9D5104B6A97EE0C /* Pods-FollowSSU.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FollowSSU.debug.xcconfig"; path = "Target Support Files/Pods-FollowSSU/Pods-FollowSSU.debug.xcconfig"; sourceTree = "<group>"; };
 		1AE282850B72A1241D49A9B9 /* Pods_FollowSSU.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FollowSSU.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		44FA5DD61BE1487E5C09477B /* Pods-FollowSSU.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FollowSSU.release.xcconfig"; path = "Target Support Files/Pods-FollowSSU/Pods-FollowSSU.release.xcconfig"; sourceTree = "<group>"; };
+		9101115E29194CD300B0A4BE /* NoticeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeViewController.swift; sourceTree = "<group>"; };
+		9101116029195E1500B0A4BE /* Notice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notice.swift; sourceTree = "<group>"; };
+		91011162291A1E2B00B0A4BE /* NoticeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeTableViewCell.swift; sourceTree = "<group>"; };
+		91011164291B816E00B0A4BE /* ContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewController.swift; sourceTree = "<group>"; };
 		913E33FF28ED92A90048694B /* FollowSSU.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FollowSSU.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		913E340228ED92A90048694B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		913E340428ED92A90048694B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -36,6 +45,7 @@
 		9163256D28F00779001DC3B7 /* ConfirmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmViewController.swift; sourceTree = "<group>"; };
 		91693EF928F9453E004AC0CB /* Student.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
 		91693EFB28F94749004AC0CB /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		9178083B29179919009BA59B /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		919F8E10290E76F700FBEF6C /* Architecture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Architecture.swift; sourceTree = "<group>"; };
 		91EFC85B28F9376800C057A2 /* Major.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Major.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -95,7 +105,12 @@
 				913E340628ED92A90048694B /* ViewController.swift */,
 				9163256D28F00779001DC3B7 /* ConfirmViewController.swift */,
 				91693EFB28F94749004AC0CB /* MapViewController.swift */,
+				9101115E29194CD300B0A4BE /* NoticeViewController.swift */,
+				9101116029195E1500B0A4BE /* Notice.swift */,
+				9178083B29179919009BA59B /* WebViewController.swift */,
 				913E340828ED92A90048694B /* Main.storyboard */,
+				91011164291B816E00B0A4BE /* ContentViewController.swift */,
+				91011162291A1E2B00B0A4BE /* NoticeTableViewCell.swift */,
 				913E340B28ED92AA0048694B /* Assets.xcassets */,
 				913E340D28ED92AA0048694B /* LaunchScreen.storyboard */,
 				913E341028ED92AA0048694B /* Info.plist */,
@@ -222,13 +237,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				919F8E11290E76F700FBEF6C /* Architecture.swift in Sources */,
+				9178083C29179919009BA59B /* WebViewController.swift in Sources */,
 				913E340728ED92A90048694B /* ViewController.swift in Sources */,
+				91011165291B816E00B0A4BE /* ContentViewController.swift in Sources */,
 				91693EFA28F9453E004AC0CB /* Student.swift in Sources */,
+				9101115F29194CD300B0A4BE /* NoticeViewController.swift in Sources */,
+				91011163291A1E2B00B0A4BE /* NoticeTableViewCell.swift in Sources */,
 				913E340328ED92A90048694B /* AppDelegate.swift in Sources */,
 				913E340528ED92A90048694B /* SceneDelegate.swift in Sources */,
 				9163256E28F00779001DC3B7 /* ConfirmViewController.swift in Sources */,
 				91EFC85C28F9376800C057A2 /* Major.swift in Sources */,
 				91693EFC28F94749004AC0CB /* MapViewController.swift in Sources */,
+				9101116129195E1500B0A4BE /* Notice.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
