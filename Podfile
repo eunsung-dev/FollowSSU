@@ -9,4 +9,6 @@ target 'FollowSSU' do
   pod 'RxSwift'
   pod 'NMapsMap'
   pod 'SwiftSoup'
+  pod 'Firebase/Analytics'
+  pod 'Firebase/Messaging'
 end
