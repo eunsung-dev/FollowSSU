@@ -17,6 +17,7 @@ class NoticeViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var selectedMajor = ""
     var notice: [Notice] = []
     var selectedContent = "빈 내용"
+    var contents: [String] = []
 
     @IBOutlet var table: UITableView!
 
@@ -65,6 +66,9 @@ class NoticeViewController: UIViewController, UITableViewDelegate, UITableViewDa
         cell.layer.cornerRadius = 30
         cell.layer.borderWidth = 1
 //        cell.backgroundColor = .blue
+//        selectedContent = ""
+//        fetchContent(URL(string: notice[indexPath.section].url))
+//        contents.append(selectedContent)
         
         return cell
     }
@@ -82,11 +86,16 @@ class NoticeViewController: UIViewController, UITableViewDelegate, UITableViewDa
         func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
             // note that indexPath.section is used rather than indexPath.row
             print("You tapped cell number \(indexPath.section).")
-            selectedContent = notice[indexPath.section].url
+            selectedContent = ""
+            fetchContent(URL(string: notice[indexPath.section].url))    // 각 제목에 맞는 내용 불러오기
             let destinationVC = ContentViewController()
-            destinationVC.contents = notice[indexPath.section].url
+//            destinationVC.contents = contents[indexPath.section]
+            print("selectedContent: \(selectedContent)")
+            print("destinationVC.contents: \(destinationVC.contents)")
+            guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "ContentViewController") as? ContentViewController else { return }
+            vc.contents = selectedContent
+            self.present(vc, animated: true)
 //            destinationVC.performSegue(withIdentifier: "goToContent", sender: self)
-//            fetchContent(URL(string: notice[indexPath.section].url))    // 각 제목에 맞는 내용 불러오기
             
 //            print("fetchContent 메서드 불러옴")
 //            performSegue(withIdentifier: "goToContent", sender: nil)
@@ -126,7 +135,7 @@ class NoticeViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 let contents = try document.getElementsByClass("content").select("p").array()
                 for c in contents {
 //                    print(try c.text())
-                    selectedContent += try c.text()
+                    selectedContent += "\(try c.text())\n"
                 }
             } catch let error {
                 print(error)

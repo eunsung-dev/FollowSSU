@@ -34,7 +34,7 @@ class MapViewController: UIViewController, UISheetPresentationControllerDelegate
         
         print("자동 로그인 여부: \(UserDefaults.standard.bool(forKey: "AutoLogin"))")
         // 기존에 자동 로그인을 선택했다면 다시 저장할 필요가 없으므로
-        if !(std.name.isEmpty || std.major.isEmpty || std.studentID.isEmpty) {
+        if !(std.name.isEmpty || std.major.isEmpty) {
             // 구조체 단위로 학생 정보를 UserDefaults 통해 로컬에 저장
             let encoder = JSONEncoder()
             if let encoded = try? encoder.encode(std) {

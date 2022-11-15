@@ -8,27 +8,57 @@
 import UIKit
 import VisionKit
 import Vision
-import PhotosUI // WWDC20 참고. UIImagePickerController를 대체.
 import AVFoundation
 import CoreLocation
+import RxSwift
 
 class ViewController: UIViewController {
     
     var request = VNRecognizeTextRequest(completionHandler: nil)
-    
+    @IBOutlet weak var nameTextField: UITextField!
+    @IBOutlet weak var majorTextField: UITextField!
+    @IBOutlet weak var toggle: UISwitch!
+    var text = ""
+    var name = ""   // 이름
+    var major = ""  // 전공
+    var comparedMajor: Major = Major()
+    var selectedStudentSubject = PublishSubject<Student>()
+    let disposeBag = DisposeBag()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         // 자동 로그인 기능 구현
         if UserDefaults.standard.bool(forKey: "AutoLogin") {
-            guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "MapViewController") else { return }
-            self.present(vc, animated: true)
+            guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "MapViewController") as? MapViewController else { return }
+            self.show(vc, sender: nil)
         }
         checkCameraPermission() // 카메라 사용 권한
         checkLocationPermission()   // 위치 정보 사용 권한
     }
-    //MARK: - 학생증을 스캔하여 로그인 버튼 클릭 시
-    @IBAction func onClick(_ sender: UIButton) {
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        var student = Student(name: name, studentID: studentID, major: major)
+        guard let vc = segue.destination as? MapViewController
+        else { fatalError("Segue destination is not found") }
+        selectedStudentSubject.subscribe(onNext: { student in
+            vc.std = student
+        })
+        .disposed(by: disposeBag)
+        selectedStudentSubject.onNext(Student(name: nameTextField.text ?? "nil", major: majorTextField.text ?? "nil"))
+    }
+    //MARK: - 로그인 버튼 클릭 시
+    @IBAction func onClickLogin(_sender: UIButton) {
+        print("onClickLogin")
+        UserDefaults.standard.set(toggle.isOn, forKey: "AutoLogin")
+    }
+    
+    //MARK: - 토글 클릭 시
+    @IBAction func onClickToggle(_ sender: UISwitch) {
+        UserDefaults.standard.set(toggle.isOn, forKey: "AutoLogin")
+    }
+    //MARK: - 카메라 버튼 클릭 시
+    @IBAction func onClickCamera(_ sender: UIButton) {
         configureDocumentView()
     }
     
@@ -37,17 +67,7 @@ class ViewController: UIViewController {
         scanningDocumentVC.delegate = self
         self.present(scanningDocumentVC, animated: true, completion: nil)
     }
-    
-    //MARK: - 모바일 학생증으로 로그인 버튼 클릭 시
-    @IBAction func touchUpInsideCameraButton(_ sender: UIButton) {
-        var configuration = PHPickerConfiguration()
-        configuration.selectionLimit = 1
-        configuration.filter = .images  // 이미지만 불러옴
-        let picker = PHPickerViewController(configuration: configuration)
-        picker.delegate = self
-        self.present(picker, animated: true, completion: nil)
-    }
-    
+        
     private func setupVisionTextRecognizeImage(image: UIImage?) {
         // setupTextRecognition
         var textString = ""
@@ -61,9 +81,6 @@ class ViewController: UIViewController {
                 }
                 
                 textString += "\n\(topCandidate.string)"
-                
-                //                DispatchQueue.main.async {
-                //                }
             }
             self.sendData(textString)
             print(textString)
@@ -88,9 +105,9 @@ class ViewController: UIViewController {
     // MARK: - 데이터 전달
     private func sendData(_ data: String) {
         DispatchQueue.main.async {
-            guard let vc = self.storyboard?.instantiateViewController(identifier: "navPush") as? ConfirmViewController else {return}
-            vc.text = data
-            self.navigationController?.pushViewController(vc, animated: true)
+            self.separatedData(data)
+            self.nameTextField.text = self.name
+            self.majorTextField.text = self.major
         }
     }
     
@@ -127,23 +144,55 @@ class ViewController: UIViewController {
         locationManager?.requestWhenInUseAuthorization()
         locationManager?.startUpdatingLocation()
     }
-    
-}
-
-extension ViewController: PHPickerViewControllerDelegate {
-    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
-        picker.dismiss(animated: true) //   먼저 picker를 dismiss시켜줍니다.
-        let itemProvider = results.first?.itemProvider // itemProvider를 가져옵니다. itemProvider는 선택된 asset의 Representation이라고 해요.
-        if let itemProvider = itemProvider, itemProvider.canLoadObject(ofClass: UIImage.self) { // provider가 내가 지정한 타입을 로드할 수 있는지 먼저 체크를 한 뒤
-            itemProvider.loadObject(ofClass: UIImage.self) { (image, error) in // 로드 할 수 있으면 로드를 합니다.
-                DispatchQueue.main.async {
-                    self.setupVisionTextRecognizeImage(image: image as? UIImage)
-                    //                    self.myImageView.image = image as? UIImage // 5
+ 
+    // MARK: - 전달받은 텍스트에서 필요한 정보를 추출하는 메서드
+    func separatedData(_ str: String) {
+        for st in str.components(separatedBy: "\n") {
+            let s = st.replacingOccurrences(of: " ", with: "")
+            if s.prefix(2) == "이름" || (s.count == 3 && s != "학생증") || (s.count == 3 && s != "학생중") {
+                if s.prefix(2) == "이름" {    // 모바일 학생증에 대한 처리
+                    name = String(s.replacingOccurrences(of: " ", with: "")[s.index(s.startIndex, offsetBy: 3)...])
+                }
+                else {
+                    name = s
                 }
             }
-        } else {
-            // TODO: Handle empty results or item provider not being able load UIImage
+            
+            if s.suffix(2) == "학부" || s.suffix(2) == "학과" { // 전공 추출
+                if s.prefix(2) == "소속" { // 모바일 학생증에 대한 처리
+                    major = accurateMajor(String(s.replacingOccurrences(of: " ", with: "")[s.index(s.startIndex, offsetBy: 3)...]))
+                }
+                else {
+                    major = accurateMajor(s)
+                }
+                continue
+            }
         }
+    }
+    //MARK: - 전공 인식 정확성 향상 메서드
+    // 전공이 한글이므로 정확성 문제로 인하여 현재 존재하는 학과와 비교하면서 가장 유사한 전공을 리턴한다.
+    func accurateMajor(_ str: String) -> String {
+        var maxCnt = 0
+        var maxStr = ""
+        for i in comparedMajor.allMajors {
+            var cnt = 0
+            if i.count != str.count {
+                continue
+            }
+            for k in i {
+                for j in str {
+                    if String(k) == String(j) {
+                       cnt += 1
+                    }
+                }
+                if cnt > maxCnt {
+//                    print(maxStr)
+                    maxCnt = cnt
+                    maxStr = i
+                }
+            }
+        }
+        return maxStr
     }
 }
 

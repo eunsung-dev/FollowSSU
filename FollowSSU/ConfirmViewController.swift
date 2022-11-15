@@ -38,7 +38,7 @@ class ConfirmViewController: UIViewController, UITextFieldDelegate {
             vc.std = student
         })
         .disposed(by: disposeBag)
-        selectedStudentSubject.onNext(Student(name: name, studentID: studentID, major: major))
+        selectedStudentSubject.onNext(Student(name: name, major: major))
     }
     
     // 로그인 버튼 클릭 시 View 이동과 함께 데이터 전달(이 데이터는 UserDefaults로 로컬에 저장됨)

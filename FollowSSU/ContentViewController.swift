@@ -12,11 +12,17 @@ import SwiftSoup
 class ContentViewController: UIViewController {
     @IBOutlet weak var contentLabel: UILabel!
     var contents = ""
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        contentLabel.text = contents
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         contentLabel.numberOfLines = 0
-        contentLabel.text = contents
-        print(contents)
+//        contentLabel.text = contents
+//        print(contents)
     }
     
     // MARK: - 내용 가져오기
