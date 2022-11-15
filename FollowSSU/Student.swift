@@ -9,6 +9,5 @@ import Foundation
 
 struct Student: Codable {
     var name = ""
-    var studentID = ""
     var major = ""
 }
