@@ -17,6 +17,8 @@
 		913E340A28ED92A90048694B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 913E340828ED92A90048694B /* Main.storyboard */; };
 		913E340C28ED92AA0048694B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 913E340B28ED92AA0048694B /* Assets.xcassets */; };
 		913E340F28ED92AA0048694B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 913E340D28ED92AA0048694B /* LaunchScreen.storyboard */; };
+		91401F5A2923F15D00A3F92E /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 91401F592923F15D00A3F92E /* FirebaseAnalytics */; };
+		91401F5C2923F15D00A3F92E /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 91401F5B2923F15D00A3F92E /* FirebaseMessaging */; };
 		9163256E28F00779001DC3B7 /* ConfirmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9163256D28F00779001DC3B7 /* ConfirmViewController.swift */; };
 		91693EFA28F9453E004AC0CB /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91693EF928F9453E004AC0CB /* Student.swift */; };
 		91693EFC28F94749004AC0CB /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91693EFB28F94749004AC0CB /* MapViewController.swift */; };
@@ -49,6 +51,7 @@
 		9178083B29179919009BA59B /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		919F8E10290E76F700FBEF6C /* Architecture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Architecture.swift; sourceTree = "<group>"; };
 		91B0D17A2923EC7A0090FE4F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		91CB94BA292405E500599064 /* FollowSSU.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FollowSSU.entitlements; sourceTree = "<group>"; };
 		91EFC85B28F9376800C057A2 /* Major.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Major.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -57,6 +60,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				91401F5C2923F15D00A3F92E /* FirebaseMessaging in Frameworks */,
+				91401F5A2923F15D00A3F92E /* FirebaseAnalytics in Frameworks */,
 				CB7F4DA2F1DF08E504C9568D /* Pods_FollowSSU.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -102,6 +107,7 @@
 		913E340128ED92A90048694B /* FollowSSU */ = {
 			isa = PBXGroup;
 			children = (
+				91CB94BA292405E500599064 /* FollowSSU.entitlements */,
 				91B0D17A2923EC7A0090FE4F /* GoogleService-Info.plist */,
 				913E340228ED92A90048694B /* AppDelegate.swift */,
 				913E340428ED92A90048694B /* SceneDelegate.swift */,
@@ -142,6 +148,10 @@
 			dependencies = (
 			);
 			name = FollowSSU;
+			packageProductDependencies = (
+				91401F592923F15D00A3F92E /* FirebaseAnalytics */,
+				91401F5B2923F15D00A3F92E /* FirebaseMessaging */,
+			);
 			productName = FollowSSU;
 			productReference = 913E33FF28ED92A90048694B /* FollowSSU.app */;
 			productType = "com.apple.product-type.application";
@@ -170,6 +180,9 @@
 				Base,
 			);
 			mainGroup = 913E33F628ED92A90048694B;
+			packageReferences = (
+				91401F582923F15D00A3F92E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			productRefGroup = 913E340028ED92A90048694B /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -398,6 +411,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = FollowSSU/FollowSSU.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = TZGL6R438Y;
@@ -433,6 +447,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = FollowSSU/FollowSSU.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = TZGL6R438Y;
@@ -484,6 +499,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		91401F582923F15D00A3F92E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		91401F592923F15D00A3F92E /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 91401F582923F15D00A3F92E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		91401F5B2923F15D00A3F92E /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 91401F582923F15D00A3F92E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 913E33F728ED92A90048694B /* Project object */;
 }
