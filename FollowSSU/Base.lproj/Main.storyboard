@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="kCg-9B-4yz">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="kCg-9B-4yz">
     <device id="retina6_0" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -173,6 +173,7 @@
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o1P-xF-hP5">
                                 <rect key="frame" x="287" y="755" width="83" height="35"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="공지사항"/>
                                 <connections>
@@ -186,6 +187,15 @@
                                 <buttonConfiguration key="configuration" style="plain" title="로그아웃"/>
                                 <connections>
                                     <action selector="logoutPressed:" destination="9yY-0x-fGV" eventType="touchUpInside" id="fKh-Hq-Z2e"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m3q-Tv-2j4">
+                                <rect key="frame" x="146.33333333333334" y="755" width="97.666666666666657" height="35"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="인스타그램"/>
+                                <connections>
+                                    <action selector="instaPressed:" destination="9yY-0x-fGV" eventType="touchUpInside" id="zZ6-NT-g8m"/>
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b2H-C7-hHE">
@@ -225,6 +235,7 @@
                         <constraints>
                             <constraint firstItem="CYq-UZ-VjZ" firstAttribute="trailing" secondItem="Khl-iT-zOw" secondAttribute="trailing" id="0e7-tC-p6n"/>
                             <constraint firstItem="b2H-C7-hHE" firstAttribute="centerX" secondItem="DM4-zs-jBI" secondAttribute="centerX" id="3pu-sQ-xLr"/>
+                            <constraint firstItem="m3q-Tv-2j4" firstAttribute="centerX" secondItem="DM4-zs-jBI" secondAttribute="centerX" id="4tw-ZY-Kpx"/>
                             <constraint firstItem="CYq-UZ-VjZ" firstAttribute="leading" secondItem="Khl-iT-zOw" secondAttribute="leading" id="73Z-Kg-ryZ"/>
                             <constraint firstItem="Khl-iT-zOw" firstAttribute="trailing" secondItem="b2H-C7-hHE" secondAttribute="trailing" id="9JS-zr-TKW"/>
                             <constraint firstItem="b2H-C7-hHE" firstAttribute="leading" secondItem="DM4-zs-jBI" secondAttribute="leading" id="FgX-kI-MWp"/>
@@ -234,6 +245,7 @@
                             <constraint firstItem="Khl-iT-zOw" firstAttribute="bottom" secondItem="o1P-xF-hP5" secondAttribute="bottom" constant="20" id="V9Z-2c-jYZ"/>
                             <constraint firstAttribute="bottom" secondItem="CYq-UZ-VjZ" secondAttribute="bottom" id="cs4-Sv-xpC"/>
                             <constraint firstItem="Khl-iT-zOw" firstAttribute="bottom" secondItem="o9s-as-5kx" secondAttribute="bottom" constant="20" id="g52-JP-Kah"/>
+                            <constraint firstItem="Khl-iT-zOw" firstAttribute="bottom" secondItem="m3q-Tv-2j4" secondAttribute="bottom" constant="20" id="jps-ca-FUf"/>
                             <constraint firstItem="Khl-iT-zOw" firstAttribute="trailing" secondItem="o1P-xF-hP5" secondAttribute="trailing" constant="20" id="xD1-fz-Ita"/>
                         </constraints>
                     </view>
@@ -312,25 +324,26 @@
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vwv-7f-rAh">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="yQn-96-gaM">
                                 <rect key="frame" x="0.0" y="47" width="390" height="763"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="textColor" systemColor="labelColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Pr2-NW-aeN"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="Pr2-NW-aeN" firstAttribute="trailing" secondItem="Vwv-7f-rAh" secondAttribute="trailing" id="2eL-Ws-WBD"/>
-                            <constraint firstItem="Vwv-7f-rAh" firstAttribute="top" secondItem="Pr2-NW-aeN" secondAttribute="top" id="2q2-4u-kxq"/>
-                            <constraint firstItem="Vwv-7f-rAh" firstAttribute="leading" secondItem="Pr2-NW-aeN" secondAttribute="leading" id="JwG-ib-Lof"/>
-                            <constraint firstItem="Pr2-NW-aeN" firstAttribute="bottom" secondItem="Vwv-7f-rAh" secondAttribute="bottom" id="ZQV-pq-jjr"/>
+                            <constraint firstItem="Pr2-NW-aeN" firstAttribute="bottom" secondItem="yQn-96-gaM" secondAttribute="bottom" id="3sG-yB-ZPi"/>
+                            <constraint firstItem="yQn-96-gaM" firstAttribute="leading" secondItem="Pr2-NW-aeN" secondAttribute="leading" id="6I4-Rk-Gu9"/>
+                            <constraint firstItem="yQn-96-gaM" firstAttribute="top" secondItem="Pr2-NW-aeN" secondAttribute="top" id="ISe-Pr-qk7"/>
+                            <constraint firstItem="Pr2-NW-aeN" firstAttribute="trailing" secondItem="yQn-96-gaM" secondAttribute="trailing" id="TcB-hD-TAk"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="fb9-MP-B4E"/>
                     <connections>
-                        <outlet property="contentLabel" destination="Vwv-7f-rAh" id="1qD-Yb-jEH"/>
+                        <outlet property="myTextField" destination="yQn-96-gaM" id="lUm-Bt-Rvz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5CS-V1-5N5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -359,8 +372,11 @@
     <resources>
         <image name="SSU" width="1024" height="768"/>
         <namedColor name="AccentColor">
-            <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.79199999570846558" blue="0.15700000524520874" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <systemColor name="labelColor">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

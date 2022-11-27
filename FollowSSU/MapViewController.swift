@@ -26,6 +26,8 @@ class MapViewController: UIViewController, UISheetPresentationControllerDelegate
     
     var mapView: NMFMapView = NMFMapView()
     
+    let instagram: Instagram = Instagram()  // 학과에 해당하는 인스타그램을 연결하기 위해
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // 뒤로 가기 버튼이 필요없으므로
@@ -45,6 +47,7 @@ class MapViewController: UIViewController, UISheetPresentationControllerDelegate
             let decoder = JSONDecoder()
             if let loadedPerson = try? decoder.decode(Student.self, from: savedPerson) {
                 print("불러온 정보: \(loadedPerson)")
+                std = loadedPerson
             }
         }
         searchTextField.delegate = self
@@ -66,6 +69,7 @@ class MapViewController: UIViewController, UISheetPresentationControllerDelegate
         mapView.moveCamera(cameraUpdate)
         
         mapView.positionMode = .direction
+        mapView.mapType = .navi // 지도 타입 변경
     }
 }
 
@@ -275,6 +279,25 @@ extension MapViewController {
         // 앱 처음 시작 시 루트 뷰 설정해줘야할듯
 //        guard let vc = self.storyboard?.instantiateViewController(identifier: "RootViewController") as? ViewController else {return}
 //        (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootVC(vc, animated: false)
+    }
+}
+
+// MARK: - 인스타그램 불러오기 기능
+extension MapViewController {
+    @IBAction func instaPressed(_ sender: UIButton) {
+        print("insta pressed")
+        let Username = instagram.instagram[std.major]
+        print(std.major)
+        let appURL = URL(string: "instagram://user?username=\(Username ?? "")")!
+        let application = UIApplication.shared
+        
+        if application.canOpenURL(appURL) {
+            application.open(appURL)
+        } else {
+            // if Instagram app is not installed, open URL inside Safari
+            let webURL = URL(string: "https://instagram.com/\(Username ?? "")")!
+            application.open(webURL)
+        }
     }
 }
 
