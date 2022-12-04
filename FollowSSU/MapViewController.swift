@@ -287,7 +287,6 @@ extension MapViewController {
     @IBAction func instaPressed(_ sender: UIButton) {
         print("insta pressed")
         let Username = instagram.instagram[std.major]
-        print(std.major)
         let appURL = URL(string: "instagram://user?username=\(Username ?? "")")!
         let application = UIApplication.shared
         

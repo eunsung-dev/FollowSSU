@@ -69,7 +69,7 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="컴퓨터학부" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0rS-ID-0kY" userLabel="Major Text Field">
+                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="유기신소재파이버공학과" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0rS-ID-0kY" userLabel="Major Text Field">
                                                 <rect key="frame" x="89.666666666666657" y="8" width="280.33333333333337" height="34"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
@@ -339,6 +339,7 @@
                             <constraint firstItem="yQn-96-gaM" firstAttribute="leading" secondItem="Pr2-NW-aeN" secondAttribute="leading" id="6I4-Rk-Gu9"/>
                             <constraint firstItem="yQn-96-gaM" firstAttribute="top" secondItem="Pr2-NW-aeN" secondAttribute="top" id="ISe-Pr-qk7"/>
                             <constraint firstItem="Pr2-NW-aeN" firstAttribute="trailing" secondItem="yQn-96-gaM" secondAttribute="trailing" id="TcB-hD-TAk"/>
+                            <constraint firstItem="yQn-96-gaM" firstAttribute="centerX" secondItem="e6R-NX-7vb" secondAttribute="centerX" id="hSH-38-Sya"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="fb9-MP-B4E"/>

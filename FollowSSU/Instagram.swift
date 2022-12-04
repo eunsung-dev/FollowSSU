@@ -54,7 +54,7 @@ struct Instagram {
         "유기신소재파이버공학과":"ssu_nme_official",
         "컴퓨터학부":"ssu_cse",
         "글로벌미디어학부":"ssu_globalmedia",
-        "스마트시스템소프트웨어학과":"", // 안 보임
+        "AI융합학부":"ai_convergence_7th",
         "IT융합전공":"",    // 인스타 계정 존재 X
         "전자정보공학부":"ssu_electronic_engineering",
         "소프트웨어학부":"ssu_soft",
