@@ -50,6 +50,7 @@ import FirebaseAnalytics
 extension AppDelegate : MessagingDelegate {
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
         print("Firebase Token: \(fcmToken ?? "")")
+        UserDefaults.standard.set(fcmToken, forKey: "fcmToken")
     }
 }
 

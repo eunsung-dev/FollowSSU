@@ -6,7 +6,7 @@ target 'FollowSSU' do
   use_frameworks!
 
   # Pods for FollowSSU
-  pod 'RxSwift'
   pod 'NMapsMap'
+  pod 'RxSwift'
   pod 'SwiftSoup'
 end

@@ -10,7 +10,6 @@ import VisionKit
 import Vision
 import AVFoundation
 import CoreLocation
-import RxSwift
 import Firebase
 
 class ViewController: UIViewController {
@@ -22,63 +21,53 @@ class ViewController: UIViewController {
     var name = ""   // 이름
     var major = ""  // 전공
     var comparedMajor: Major = Major()
-    var selectedStudentSubject = PublishSubject<Student>()
-    let disposeBag = DisposeBag()
     let majorCode = MajorCode()
     
     var pickerView: UIPickerView = UIPickerView()
     
-    let list = ["기독교학과",
-                "영어영문학과",
-                "불어불문학과",
-                "일어일문학과",
-                "사학과",
-                "스포츠학부",
-                "국어국문학과",
-                "독어독문학과",
-                "중어중문학과",
-                "철학과",
-                "예술창작학부",
-                "수학과",
-                "화학과",
-                "의생명시스템학부",
-                "물리학과",
-                "정보통계보험수리학과",
-                "법학과",
-                "국제법무학과",
-                "사회복지학부",
-                "정치외교학과",
-                "언론홍보학과",
-                "행정학부",
-                "정보사회학과",
-                "평생교육학과",
-                "경제학과",
-                "금융경제학과",
-                "통상산업학과",   // 공지사항 존재 X
-                "글로벌통상학과",
-                "국제무역학과",   // 공지사항 존재 X
-                "경영학부",
-                "회계학과",
-                "벤처경영학과",
-                "복지경영학과",
-                "벤처중소기업학과",
-                "금융학부",
-                "혁신경영학과",
-                "회계세무학과",
-                "화학공학과",
-                "전기공학부",
-                "건축학부",
-                "산업정보시스템공학과",
-                "기계공학부",
-                "유기신소재파이버공학과",
-                "컴퓨터학부",
-                "글로벌미디어학부",
-                "AI융합학부",
-                "IT융합전공",
-                "전자정보공학부",
-                "소프트웨어학부",
-                "미디어경영학과",
-                "융합특성화자유전공학부"
+    let list = [        "컴퓨터학부",
+                        "소프트웨어학부",
+                        "전자정보공학부",
+                        "미디어경영학과",
+                        "융합특성화자유전공학부",
+                        "AI융합학부",
+                        "화학공학과",
+                        "전기공학부",
+                        "기계공학부",
+                        "산업정보시스템공학과",
+                        "건축학부",
+                        "기독교학과",
+                        "국어국문학과",
+                        "영어영문학과",
+                        "독어독문학과",
+                        "불어불문학과",
+                        "중어중문학과",
+                        "일어일문학과",
+                        "철학과",
+                        "사학과",
+                        "문예창작전공",
+                        "스포츠학부",
+                        "수학과",
+                        "물리학과",
+                        "화학과",
+                        "정보통계보험수리학과",
+                        "의생명시스템학부",
+                        "사회복지학부",
+                        "행정학부",
+                        "정치외교학과",
+                        "정보사회학과",
+                        "언론홍보학과",
+                        "평생교육학과",
+                        "경제학과",
+                        "글로벌통상학과",
+                        "금융경제학과",
+                        "국제무역학과",
+                        "경영학부",
+                        "벤처중소기업학과",
+                        "회계학과",
+                        "금융학부",
+                        "혁신경영학과",
+                        "벤처경영학과"
     ].sorted()
     
     override func viewDidLoad() {
@@ -129,28 +118,40 @@ class ViewController: UIViewController {
         self.view.endEditing(true)
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let vc = segue.destination as? MapViewController
-        else { fatalError("Segue destination is not found") }
-        selectedStudentSubject.subscribe(onNext: { student in
-            vc.std = student
-        })
-        .disposed(by: disposeBag)
-        selectedStudentSubject.onNext(Student(name: nameTextField.text ?? "nil", major: majorTextField.text ?? "nil"))
-    }
     
     //MARK: - 로그인 버튼 클릭 시
     @IBAction func onClickLogin(_sender: UIButton) {
         print("onClickLogin")
-        UserDefaults.standard.set(true, forKey: "AutoLogin")
-        // 생성된 토큰 저장
-        let ref = Database.database().reference(withPath: "userInfo")
-        let token = UserDefaults.standard.string(forKey: "fcmToken") ?? "not found token"
-        let userItemRef = ref.child(majorCode.codes[majorTextField.text!]!).child(token)
-        let timestamp = Date().timeIntervalSince1970.rounded()
-        let values: [String: Double] = ["timestamp":timestamp]
-        userItemRef.setValue(values)
-        
+        if nameTextField.text == "" || majorTextField.text == "" {
+            showAlert()
+        }
+        else {
+            UserDefaults.standard.set(true, forKey: "AutoLogin")
+            // 생성된 토큰 저장
+            let ref = Database.database().reference(withPath: "userInfo")
+            let token = UserDefaults.standard.string(forKey: "fcmToken") ?? "Not Found Token"
+            let userItemRef = ref.child(majorCode.codes[majorTextField.text!]!).child(token)
+            let timestamp = Date().timeIntervalSince1970.rounded()
+            let values: [String: Double] = ["timestamp":timestamp]
+            userItemRef.setValue(values)
+            
+            // 데이터 전달
+            guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "MapViewController") as? MapViewController
+            else { fatalError("Segue destination is not found") }
+            vc.std.name = nameTextField.text ?? "nil"
+            vc.std.major = majorTextField.text ?? "nil"
+            print("vc.std: \(vc.std)")
+            self.navigationController?.pushViewController(vc, animated: true)
+            // 로그인하였으니 텍스트 필드에 있는 개인 정보 삭제
+            nameTextField.text = ""
+            majorTextField.text = ""
+        }        
+    }
+    func showAlert() {
+        let alert = UIAlertController(title: "잘못된 입력", message: "이름과 전공을 모두 입력해주세요.", preferredStyle: UIAlertController.Style.alert)
+        let defaultAction = UIAlertAction(title: "확인", style: .default, handler: nil)
+        alert.addAction(defaultAction)
+        present(alert, animated: true, completion: nil)
     }
     
     // MARK: - 개인정보 처리방침 클릭 시
@@ -192,7 +193,11 @@ class ViewController: UIViewController {
         })
         // property 추가
         request.recognitionLanguages = ["en-US", "ko-KR"]
-        request.automaticallyDetectsLanguage = true
+        if #available(iOS 16.0, *) {
+            request.automaticallyDetectsLanguage = true
+        } else {
+            // Fallback on earlier versions
+        }
         
         let requests = [request]
         // request handler 생성
@@ -318,7 +323,11 @@ extension ViewController: VNDocumentCameraViewControllerDelegate {
             }
         }
         recognizeTextRequest.recognitionLanguages = ["en-US", "ko-KR"]
-        recognizeTextRequest.automaticallyDetectsLanguage = true
+        if #available(iOS 16.0, *) {
+            recognizeTextRequest.automaticallyDetectsLanguage = true
+        } else {
+            // Fallback on earlier versions
+        }
         for image in images {
             let requestHandler = VNImageRequestHandler(cgImage: image, options: [:])
             

@@ -49,6 +49,7 @@
 		91693EFA28F9453E004AC0CB /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91693EF928F9453E004AC0CB /* Student.swift */; };
 		91693EFC28F94749004AC0CB /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91693EFB28F94749004AC0CB /* MapViewController.swift */; };
 		919F8E11290E76F700FBEF6C /* Architecture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 919F8E10290E76F700FBEF6C /* Architecture.swift */; };
+		91A65F602949D60C007CAB47 /* LectureRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A65F5F2949D60C007CAB47 /* LectureRoom.swift */; };
 		91B0D17B2923EC7A0090FE4F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 91B0D17A2923EC7A0090FE4F /* GoogleService-Info.plist */; };
 		91CAAB32293C936E005C5309 /* StaticCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91CAAB31293C936E005C5309 /* StaticCell.swift */; };
 		91EB8EAD29327EB900F886AB /* Instagram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91EB8EAC29327EB900F886AB /* Instagram.swift */; };
@@ -77,6 +78,7 @@
 		91693EF928F9453E004AC0CB /* Student.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
 		91693EFB28F94749004AC0CB /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		919F8E10290E76F700FBEF6C /* Architecture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Architecture.swift; sourceTree = "<group>"; };
+		91A65F5F2949D60C007CAB47 /* LectureRoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureRoom.swift; sourceTree = "<group>"; };
 		91B0D17A2923EC7A0090FE4F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		91CAAB31293C936E005C5309 /* StaticCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticCell.swift; sourceTree = "<group>"; };
 		91CB94BA292405E500599064 /* FollowSSU.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FollowSSU.entitlements; sourceTree = "<group>"; };
@@ -179,6 +181,7 @@
 			isa = PBXGroup;
 			children = (
 				9101116029195E1500B0A4BE /* Notice.swift */,
+				91A65F5F2949D60C007CAB47 /* LectureRoom.swift */,
 				91252650294178CF00806506 /* MajorCode.swift */,
 				91EB8EAC29327EB900F886AB /* Instagram.swift */,
 				91EFC85B28F9376800C057A2 /* Major.swift */,
@@ -371,6 +374,7 @@
 				913E340528ED92A90048694B /* SceneDelegate.swift in Sources */,
 				91EFC85C28F9376800C057A2 /* Major.swift in Sources */,
 				91693EFC28F94749004AC0CB /* MapViewController.swift in Sources */,
+				91A65F602949D60C007CAB47 /* LectureRoom.swift in Sources */,
 				91252651294178CF00806506 /* MajorCode.swift in Sources */,
 				9101116129195E1500B0A4BE /* Notice.swift in Sources */,
 			);
@@ -448,7 +452,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -502,7 +506,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -520,7 +524,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = FollowSSU/FollowSSU.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = TZGL6R438Y;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FollowSSU/Info.plist;
@@ -535,6 +539,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -542,9 +547,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.eunsung-dev.FollowSSU";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -556,7 +564,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = FollowSSU/FollowSSU.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = TZGL6R438Y;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FollowSSU/Info.plist;
@@ -571,6 +579,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -578,9 +587,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.eunsung-dev.FollowSSU";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

@@ -12,6 +12,11 @@ import Firebase
 
 class MapViewController: UIViewController, UISearchControllerDelegate, UISearchBarDelegate {
     @IBOutlet weak var map: NMFMapView!
+    @IBOutlet weak var changeImageButton: UIButton!
+    @IBOutlet weak var backgroundButton: UIImageView!
+    @IBOutlet weak var noticeButton: UIButton!
+    @IBOutlet weak var instagramButton: UIButton!
+    @IBOutlet weak var logoutButton: UIButton!
     var std: Student = Student()    // 학생 구조체 단위로 저장하기 위해
     let defaults = UserDefaults.standard
     var searchContent: String = ""
@@ -26,6 +31,8 @@ class MapViewController: UIViewController, UISearchControllerDelegate, UISearchB
     let dataSource = NMFInfoWindowDefaultTextSource.data()
     let majorCode = MajorCode()
     let searchController = UISearchController()
+    let lectureRoom = LectureRoom() // 입력한 강의실 번호가 존재하는지 여부를 확인하기 위해
+    var isActive: Bool = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -94,7 +101,7 @@ class MapViewController: UIViewController, UISearchControllerDelegate, UISearchB
         searchController.searchBar.delegate = self
         searchController.delegate = self
         searchController.searchBar.placeholder = "강의실 번호를 검색해보세요"
-        
+        searchController.searchBar.setValue("취소", forKey: "cancelButtonText")
         // 인사말 설정
         let label = UILabel()
         label.text = "\(std.name)님, 안녕하세요"
@@ -103,14 +110,40 @@ class MapViewController: UIViewController, UISearchControllerDelegate, UISearchB
         let fullText = label.text ?? ""
         let attribtuedString = NSMutableAttributedString(string: fullText)
         let range = (fullText as NSString).range(of: "\(std.name)님")    // 사용자 이름만 색상을 바꾸기 위해
-        attribtuedString.addAttribute(.foregroundColor, value: UIColor(named: "AccentColor") ?? UIColor(.blue), range: range)
+        attribtuedString.addAttribute(.foregroundColor, value: UIColor(named: "AccentColor")!, range: range)
         label.attributedText = attribtuedString
         self.navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: label)
         navigationItem.searchController = searchController
         navigationController?.navigationBar.backgroundColor = .white
         
+        self.backgroundButton.alpha = 0.0
+        self.noticeButton.alpha = 0.0
+        self.instagramButton.alpha = 0.0
+        self.logoutButton.alpha = 0.0
     }
     
+    @IBAction func buttonStart(_ sender: UIButton) {
+        if isActive {
+            isActive = false
+            changeImageButton.setImage(UIImage(named: "minusBtn"), for: .normal)
+            UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
+                self.backgroundButton.alpha = 1.0
+                self.noticeButton.alpha = 1.0
+                self.instagramButton.alpha = 1.0
+                self.logoutButton.alpha = 1.0
+            })
+        }
+        else {
+            isActive = true
+            changeImageButton.setImage(UIImage(named: "plusBtn"), for: .normal)
+            UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
+                self.backgroundButton.alpha = 0.0
+                self.noticeButton.alpha = 0.0
+                self.instagramButton.alpha = 0.0
+                self.logoutButton.alpha = 0.0
+            })
+        }
+    }
     func setAuthAlertAction() {
         let authAlertController: UIAlertController
         authAlertController = UIAlertController(title: "위치 권한 요청", message: "위치 권한을 허용해야만 앱을 사용할 수 있습니다.", preferredStyle: UIAlertController.Style.alert)
@@ -204,29 +237,40 @@ extension MapViewController: UITextFieldDelegate {
             dataSource.title = "지하 \(self.lectureNum.map{String($0)}[1...].joined())호"
         }
         else {
-            dataSource.title = "\(self.lectureNum.map{String($0)}.first ?? "0")층  \(self.lectureNum)호"
+            if self.lectureNum.count == 3 { // 10층 미만인 강의실일 경우
+                dataSource.title = "\(self.lectureNum.map{String($0)}.first ?? "0")층  \(self.lectureNum)호"
+            }
+            else {  // 10층 이상이거나 "-"가 존재할 경우
+                if let num = Int(self.lectureNum) { // 10층 이상일 경우
+                    dataSource.title = "\(self.lectureNum.map{String($0)}.prefix(2).joined())층  \(num)호"
+                }
+                else {  // "-"가 존재한 경우
+                    dataSource.title = "\(self.lectureNum.map{String($0)}.first ?? "0")층  \(self.lectureNum)호"
+                }
+            }
         }
         infoWindow.dataSource = dataSource
         // 마커를 탭하면:
-        let handler = { [weak self] (overlay: NMFOverlay) -> Bool in
-            if let marker = overlay as? NMFMarker {
-                if marker.infoWindow == nil {
-                    // 현재 마커에 정보 창이 열려있지 않을 경우 엶
-                    self?.infoWindow.open(with: marker)
-                } else {
-                    // 이미 현재 마커에 정보 창이 열려있을 경우 닫음
-                    self?.infoWindow.close()
-                }
-            }
-            return true
-        };
-        
-        marker.touchHandler = handler
+//        let handler = { [weak self] (overlay: NMFOverlay) -> Bool in
+//            if let marker = overlay as? NMFMarker {
+//                if marker.infoWindow == nil {
+//                    // 현재 마커에 정보 창이 열려있지 않을 경우 엶
+//                    self?.infoWindow.open(with: marker)
+//                } else {
+//                    // 이미 현재 마커에 정보 창이 열려있을 경우 닫음
+//                    self?.infoWindow.close()
+//                }
+//            }
+//            return true
+//        };
+//
+//        marker.touchHandler = handler
         markers.append(marker)
         // 해당 건물에 대한 마커 생성
         for i in markers {
             i.mapView = mapView
         }
+        self.infoWindow.open(with: marker)  // 마커를 탭하지 않고 정보 창 생성
         // 마커로 카메라 이동
         let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: architecture.positions[Int(architectureNum)!-1].lat, lng: architecture.positions[Int(architectureNum)!-1].lng))
         cameraUpdate.animation = .easeIn
@@ -278,31 +322,62 @@ extension MapViewController {
 extension MapViewController {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         print("searchBar: \(searchBar.text ?? "")")
-        let length = searchBar.text!.count    // searchTextField의 길이
-        if length == 5 {    // 5글자라면 모두 숫자이어야 한다.
-            if Int(searchBar.text!) != nil {  // 모두 숫자인 경우
-                if checkArchitectureNum(searchBar.text!) { // 올바른 건물 번호라면 해당 건물에 마커 생성
-                    print("5글자 올바른 건물 번호입니다.")
-                    createMarker()
-                }
+        if lectureRoom.noNumber.contains(searchBar.text ?? "") && checkArchitectureNum(searchBar.text ?? "") {    // 존재하는 강의실일 경우
+            createMarker()
+        }
+        else if let num = Int(searchBar.text!) {
+            if binarySearch(lectureRoom.lectureRooms, num: num) && checkArchitectureNum(searchBar.text ?? "") {
+                createMarker()
             }
             else {
                 showAlert()
             }
         }
-        else if length == 6 {   // 6글자라면 지하에 있는 강의실이므로 지정된 위치에 B가 존재해야 한다.
-            if searchBar.text!.filter({$0.isNumber == true}).count == length-1  && searchBar.text!.map({String($0)})[2] == "B" {
-                if checkArchitectureNum(searchBar.text!) {
-                    print("6글자 올바른 건물 번호입니다.")
-                    createMarker()
-                }
-            }
-            else {
-                showAlert()
-            }
-        }
-        else {  // alert 메서드 호출
+        else {
             showAlert()
         }
+//        let length = searchBar.text!.count    // searchTextField의 길이
+//        if length == 5 {    // 5글자라면 모두 숫자이어야 한다.
+//            if Int(searchBar.text!) != nil {  // 모두 숫자인 경우
+//                if checkArchitectureNum(searchBar.text!) { // 올바른 건물 번호라면 해당 건물에 마커 생성
+//                    print("5글자 올바른 건물 번호입니다.")
+//                    createMarker()
+//                }
+//            }
+//            else {
+//                showAlert()
+//            }
+//        }
+//        else if length == 6 {   // 6글자라면 지하에 있는 강의실이므로 지정된 위치에 B가 존재해야 한다.
+//            if searchBar.text!.filter({$0.isNumber == true}).count == length-1  && searchBar.text!.map({String($0)})[2] == "B" {
+//                if checkArchitectureNum(searchBar.text!) {
+//                    print("6글자 올바른 건물 번호입니다.")
+//                    createMarker()
+//                }
+//            }
+//            else {
+//                showAlert()
+//            }
+//        }
+//        else {  // alert 메서드 호출
+//            showAlert()
+//        }
     }
+    func binarySearch(_ array: [Int], num: Int) -> Bool {
+        var start = 0
+        var end = (array.count - 1)
+        
+        while start <= end {
+            let mid = (start + end) / 2
+            
+            if array[mid] == num { return true }
+            if array[mid] > num {
+                end = mid - 1
+            } else {
+                start = mid + 1
+            }
+        }
+        return false
+    }
+
 }

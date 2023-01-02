@@ -158,9 +158,90 @@ class NoticeViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     fetchTitle(URL(string: str))
                 case "유기신소재파이버공학과":
                     print("미구현")
-                    
+                case "전기공학부":
+                    guard let str = myURL?.absoluteString.replacingOccurrences(of: "offset=0", with: "offset=\((pageIdx-1)*10)") else { return print("not found page") }
+                    pageIdx += 1
+                    fetchTitle(URL(string: str))
+                case "기계공학부":
+                    guard let str = myURL?.absoluteString.replacingOccurrences(of: "page=1", with: "page=\(pageIdx)") else { return print("not found page") }
+                    pageIdx += 1
+                    fetchTitle(URL(string: str))
+                case "산업정보시스템공학과":
+                    guard let str = myURL?.absoluteString.replacingOccurrences(of: "page/1", with: "page/\(pageIdx)") else { return print("not found page") }
+                    pageIdx += 1
+                    fetchTitle(URL(string: str))
+                case "건축학부":
+                    guard let str = myURL?.absoluteString.replacingOccurrences(of: "page/1", with: "page/\(pageIdx)") else { return print("not found page") }
+                    pageIdx += 1
+                    fetchTitle(URL(string: str))
+                    // MARK: - 인문대학 load more notice
+                case "기독교학과", "국어국문학과", "영어영문학과", "독어독문학과", "불어불문학과", "중어중문학과", "일어일문학과", "철학과", "사학과", "문예창작전공", "스포츠학부":
+                    guard let str = myURL?.absoluteString.replacingOccurrences(of: "page/1", with: "page/\(pageIdx)") else { return print("not found page") }
+                    pageIdx += 1
+                    fetchTitle(URL(string: str))
+                    // MARK: - 자연과학대학 load more notice
+                case "수학과":
+                    guard let str = myURL?.absoluteString.replacingOccurrences(of: "paged=1", with: "paged=\(pageIdx)") else { return print("not found page") }
+                    pageIdx += 1
+                    fetchTitle(URL(string: str))
+                case "물리학과", "화학과", "의생명시스템학부":
+                    guard let str = myURL?.absoluteString.replacingOccurrences(of: "page/1", with: "page/\(pageIdx)") else { return print("not found page") }
+                    pageIdx += 1
+                    fetchTitle(URL(string: str))
+                case "정보통계보험수리학과":
+                    guard let str = myURL?.absoluteString.replacingOccurrences(of: "page=1", with: "page=\(pageIdx)") else { return print("not found page") }
+                    pageIdx += 1
+                    fetchTitle(URL(string: str))
+                    // MARK: - 법과대학 load more notice
+                case "법학과":
+                    print("미구현")
+                case "국제법무학과":
+                    print("미구현")
+                    // MARK: - 사회과학대학 load more notice
+                case "사회복지학부", "행정학부", "정치외교학과", "언론홍보학과":
+                    guard let str = myURL?.absoluteString.replacingOccurrences(of: "page/1", with: "page/\(pageIdx)") else { return print("not found page") }
+                    pageIdx += 1
+                    fetchTitle(URL(string: str))
+                case "정보사회학과":
+                    guard let str = myURL?.absoluteString.replacingOccurrences(of: "offset=0", with: "offset=\((pageIdx-1)*10)") else { return print("not found page") }
+                    pageIdx += 1
+                    fetchTitle(URL(string: str))
+                case "평생교육학과":
+                    guard let str = myURL?.absoluteString.replacingOccurrences(of: "page=1", with: "page=\(pageIdx)") else { return print("not found page") }
+                    pageIdx += 1
+                    fetchTitle(URL(string: str))
+                    // MARK: - 경제통상대학 load more notice
+                case "경제학과":
+                    guard let str = myURL?.absoluteString.replacingOccurrences(of: "page=1", with: "page=\(pageIdx)") else { return print("not found page") }
+                    pageIdx += 1
+                    fetchTitle(URL(string: str))
+                case "글로벌통상학과", "국제무역학과":
+                    guard let str = myURL?.absoluteString.replacingOccurrences(of: "page/1", with: "page/\(pageIdx)") else { return print("not found page") }
+                    pageIdx += 1
+                    fetchTitle(URL(string: str))
+                case "금융경제학과":
+                    guard let str = myURL?.absoluteString.replacingOccurrences(of: "page=1", with: "page=\(pageIdx)") else { return print("not found page") }
+                    pageIdx += 1
+                    fetchTitle(URL(string: str))
+                // MARK: - 경영대학 load more notice
+                case "경영학부":
+                    guard let str = myURL?.absoluteString.replacingOccurrences(of: "page=1", with: "page=\(pageIdx)") else { return print("not found page") }
+                    pageIdx += 1
+                    fetchTitle(URL(string: str))
+                case "벤처중소기업학과", "회계학과", "금융학부","혁신경영학과":
+                    guard let str = myURL?.absoluteString.replacingOccurrences(of: "page/1", with: "page/\(pageIdx)") else { return print("not found page") }
+                    pageIdx += 1
+                    fetchTitle(URL(string: str))
+                case "벤처경영학과":
+                    guard let str = myURL?.absoluteString.replacingOccurrences(of: "page/1", with: "page/\(pageIdx)") else { return print("not found page") }
+                    pageIdx += 1
+                    fetchTitle(URL(string: str))
+
+
+
+
                 default:
-                    print("새로운 데이터를 추가할 수 없습니다.")
+                    print("새로운 데이터를 추가할 수 없습니다.")   // 추후에, 한번만 실행되게 구현해야 함
                 }
             }
             self.perform(#selector(loadTable), with: nil, afterDelay: 1.0)
@@ -270,7 +351,187 @@ class NoticeViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     }
                 case "유기신소재파이버공학과":
                     print("미구현")
+                case "전기공학부":
+                    let contents = try document.getElementsByClass("board-list2").select("li").array()
+                    for content in contents {
+                        let noticeUrl = try content.getElementsByClass("subject").select("a").attr("href")
+                        let number = try content.getElementsByClass("num").text()
+                        let title = try content.getElementsByClass("subject").select("a").text()
+                        let date = try content.getElementsByClass("date").text()
+                        notice.append(Notice(number: number, title: title, url: "http://ee.ssu.ac.kr/\(noticeUrl)", date: date))
+                    }
+                case "기계공학부":
+                    let contents = try document.getElementsByClass("board-list").select("tbody").select("tr").array()
+                    for content in contents {
+                        let noticeUrl = try content.getElementsByClass("subject").select("a").attr("href")
+                        let number = try content.getElementsByClass("w_cell").text()
+                        let title = try content.getElementsByClass("subject").select("a").text()
+                        guard let date = try content.select("td").array().last?.text() else { return print("날짜를 찾을 수 없습니다.") }
+                        notice.append(Notice(number: number, title: title, url: "http://me.ssu.ac.kr/\(noticeUrl)", date: date))
+                    }
+                case "산업정보시스템공학과":
+                    let contents = try document.getElementsByClass("t_list hover").select("tbody").select("tr").array()
+                    for content in contents {
+                        let noticeUrl = try content.getElementsByClass("title").select("a").attr("href")
+                        let number = try content.getElementsByClass("first").text()
+                        let title = try content.getElementsByClass("title").select("a").text()
+                        let date = try content.select("td").array().map{try $0.text()}[3]
+                        notice.append(Notice(number: number, title: title, url: noticeUrl, date: date))
+                    }
+                case "건축학부":
+                    let contents = try document.getElementsByClass("t_list hover").select("tbody").select("tr").array()
+                    for content in contents {
+                        let noticeUrl = try content.getElementsByClass("title").select("a").attr("href")
+                        let title = try content.getElementsByClass("title").select("a").text()
+                        let date = try content.select("td").array().map{try $0.text()}[2]
+                        notice.append(Notice(number: "", title: title, url: noticeUrl, date: date))
+                    }
                     
+                    // MARK: - 인문대학 fetch title
+                case "기독교학과", "국어국문학과", "영어영문학과", "독어독문학과", "불어불문학과", "중어중문학과", "일어일문학과", "철학과", "사학과", "문예창작전공", "스포츠학부":
+                    let contents = try document.getElementsByClass("t_list hover").select("tbody").select("tr").array()
+                    for content in contents {
+                        let noticeUrl = try content.getElementsByClass("title").select("a").attr("href")
+                        let title = try content.getElementsByClass("title").select("a").text()
+                        let c = try content.select("td").array().map{try $0.text()}
+                        if c.count >= 4 {   // 공지사항 페이지 범위를 넘어가는 것을 막기 위해
+                            notice.append(Notice(number: "", title: title, url: noticeUrl, date: c[3]))
+                        }
+                    }
+                    // MARK: - 자연과학대학 fetch title
+                case "수학과", "물리학과", "화학과":
+                    let contents = try document.getElementsByClass("t_list hover").select("tbody").select("tr").array()
+                    for content in contents {
+                        let noticeUrl = try content.getElementsByClass("title").select("a").attr("href")
+                        let title = try content.getElementsByClass("title").select("a").text()
+                        let c = try content.select("td").array().map{try $0.text()}
+                        if c.count >= 4 {   // 공지사항 페이지 범위를 넘어가는 것을 막기 위해
+                            notice.append(Notice(number: "", title: title, url: noticeUrl, date: c[3]))
+                        }
+                    }
+                case "정보통계보험수리학과":
+                    let contents = try document.getElementsByClass("table").select("tbody").select("tr").array()
+                    for idx in 0..<contents.count {
+                        if idx == 0 {   // 게시글이 아닌 tr을 안보이게 하기 위해
+                            continue
+                        }
+                        let noticeUrl = try contents[idx].select("a").attr("href")    // 공지사항 게시글 url 저장
+                        let c = try contents[idx].select("td").array().map{try $0.text()}
+                        if c.count >= 4 {   // 공지사항 페이지 범위를 넘어가는 것을 막기 위해
+                            notice.append(Notice(number: c[0], title: c[1], url: "http://stat.ssu.ac.kr/\(noticeUrl)", date: c[3]))
+                        }
+                    }
+                case "의생명시스템학부":
+                    let contents = try document.getElementsByClass("t_list hover").select("tbody").select("tr").array()
+                    for content in contents {
+                        let noticeUrl = try content.getElementsByClass("title").select("a").attr("href")
+                        let title = try content.getElementsByClass("title").select("a").text()
+                        let date = try content.select("td").array().map{try $0.text()}[2]
+                        notice.append(Notice(number: "", title: title, url: noticeUrl, date: date))
+                    }
+                    // MARK: - 법과대학 fetch title
+                case "법학과":
+                    print("미구현")
+                case "국제법무학과":
+                    print("미구현")
+                    // MARK: - 사회과학대학 fetch title
+                case "사회복지학부", "행정학부", "정치외교학과", "언론홍보학과":
+                    let contents = try document.getElementsByClass("t_list hover").select("tbody").select("tr").array()
+                    for content in contents {
+                        let noticeUrl = try content.getElementsByClass("title").select("a").attr("href")
+                        let title = try content.getElementsByClass("title").select("a").text()
+                        let c = try content.select("td").array().map{try $0.text()}
+                        if c.count >= 4 {   // 공지사항 페이지 범위를 넘어가는 것을 막기 위해
+                            notice.append(Notice(number: "", title: title, url: noticeUrl, date: c[3]))
+                        }
+                    }
+                case "정보사회학과":
+                    let contents = try document.getElementsByClass("board_list").select("tbody").select("tr").array()
+                    for content in contents {
+                        let noticeUrl = try content.getElementsByClass("subject").select("a").attr("href")
+                        let title = try content.getElementsByClass("subject").select("a").text()
+                        let c = try content.select("td").array().map{try $0.text()}
+                        if c.count >= 5 {   // 공지사항 페이지 범위를 넘어가는 것을 막기 위해
+                            notice.append(Notice(number: "", title: title, url: "http://inso.ssu.ac.kr\(noticeUrl.replacingOccurrences(of: "학과공지", with: "%ED%95%99%EA%B3%BC%EA%B3%B5%EC%A7%80"))", date: c[4]))
+                        }
+                    }
+                case "평생교육학과":
+                    let contents = try document.getElementsByClass("board_list").select("tbody").select("tr").array()
+                    for idx in 0..<contents.count {
+                        if idx == 0 {   // 게시글이 아닌 tr을 안보이게 하기 위해
+                            continue
+                        }
+                        let noticeUrl = try contents[idx].getElementsByClass("subject").select("a").attr("href")    // 공지사항 게시글 url 저장
+                        let title = try contents[idx].getElementsByClass("subject").select("a").text()
+                        let date = try contents[idx].getElementsByClass("datetime").text()
+                        notice.append(Notice(number: "", title: title, url: noticeUrl.replacingOccurrences(of: "../", with: "http://lifelongedu.ssu.ac.kr/"), date: date))
+                    }
+                    // MARK: - 경제통상대학 fetch title
+                case "경제학과":
+                    let contents = try document.getElementsByClass("notice_list").select("tbody").select("tr").array()
+                    for content in contents {
+                        let noticeUrl = try content.getElementsByClass("td_subject").select("a").attr("href")
+                        let title = try content.getElementsByClass("td_subject").select("a").text()
+                        let date = try content.getElementsByClass("td_datetime").text()
+                        notice.append(Notice(number: "", title: title, url: noticeUrl, date: date))
+                    }
+                case "글로벌통상학과", "국제무역학과":
+                    let contents = try document.getElementsByClass("t_list hover").select("tbody").select("tr").array()
+                    for content in contents {
+                        let noticeUrl = try content.getElementsByClass("title").select("a").attr("href")
+                        let title = try content.getElementsByClass("title").select("a").text()
+                        let c = try content.select("td").array().map{try $0.text()}
+                        if c.count >= 4 {   // 공지사항 페이지 범위를 넘어가는 것을 막기 위해
+                            notice.append(Notice(number: "", title: title, url: noticeUrl, date: c[3]))
+                        }
+                    }
+                case "금융경제학과":
+                    let contents = try document.getElementsByClass("table table-hover").select("tbody").select("tr").array()
+                    for content in contents {
+                        if pageIdx == 2 {   // 첫번째 페이지를 불러올 때만 번호가 공지인 게시글을 보여줘야 하므로
+                            let noticeUrl = try content.getElementsByClass("td-title").select("a").attr("href")
+                            let title = try content.getElementsByClass("td-title").select("a").text()
+                            let date = try content.getElementsByClass("td-date").text()
+                            notice.append(Notice(number: "", title: title, url: noticeUrl, date: date))
+                        }
+                        else {
+                            if !content.hasClass("el-notice") {
+                                let noticeUrl = try content.getElementsByClass("td-title").select("a").attr("href")
+                                let title = try content.getElementsByClass("td-title").select("a").text()
+                                let date = try content.getElementsByClass("td-date").text()
+                                notice.append(Notice(number: "", title: title, url: noticeUrl, date: date))
+                            }
+                        }
+                    }
+                    // MARK: - 경영대학 fetch title
+                case "경영학부":
+                    let contents = try document.getElementById("bList01")!.select("li").array()
+                    for content in contents {
+                        let noticeUrl = try content.select("a").attr("href")
+                        let title = try content.select("a").text()
+                        let date = (try content.select("span").text().split(separator: " ").first.map{String($0)})!
+                        notice.append(Notice(number: "", title: title, url: "http://biz.ssu.ac.kr/\(noticeUrl)", date: date))
+                    }
+                case "벤처중소기업학과", "회계학과", "금융학부","혁신경영학과":
+                    let contents = try document.getElementsByClass("t_list hover").select("tbody").select("tr").array()
+                    for content in contents {
+                        let noticeUrl = try content.getElementsByClass("title").select("a").attr("href")
+                        let title = try content.getElementsByClass("title").select("a").text()
+                        let c = try content.select("td").array().map{try $0.text()}
+                        if c.count >= 4 {   // 공지사항 페이지 범위를 넘어가는 것을 막기 위해
+                            notice.append(Notice(number: "", title: title, url: noticeUrl, date: c[3]))
+                        }
+                    }
+                case "벤처경영학과":
+                    let contents = try document.getElementsByClass("card_cont").array()
+                    for content in contents {
+                        let noticeUrl = try content.select("a").attr("href")
+                        let title = try content.select("p").text()
+                        let date = try content.select("date_val").text()
+                        notice.append(Notice(number: "", title: title, url: noticeUrl, date: date))
+                    }
+
+
                 default:
                     print("제목을 가져올 수 없습니다.")
                 }
@@ -307,7 +568,49 @@ class NoticeViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     selectedContent = try document.getElementsByClass("body").html()
                 case "유기신소재파이버공학과":
                     print("미구현")
-                    
+                case "전기공학부":
+                    selectedContent = try document.getElementsByClass("body").html()
+                case "기계공학부":
+                    selectedContent = try document.getElementsByClass("view_con").html()
+                case "산업정보시스템공학과":
+                    selectedContent = try document.getElementsByClass("td_box").html()
+                case "건축학부":
+                    selectedContent = try document.getElementsByClass("td_box").html()
+                    // MARK: - 인문대학 fetch content
+                case "기독교학과", "국어국문학과", "영어영문학과", "독어독문학과", "불어불문학과", "중어중문학과", "일어일문학과", "철학과", "사학과", "문예창작전공", "스포츠학부":
+                    selectedContent = try document.getElementsByClass("td_box").html()
+                    // MARK: - 자연과학대학 fetch content
+                case "수학과", "물리학과", "화학과", "의생명시스템학부":
+                    selectedContent = try document.getElementsByClass("td_box").html()
+                case "정보통계보험수리학과":
+                    selectedContent = try document.getElementsByClass("content").html()
+                    // MARK: - 법과대학 fetch content
+                case "법학과":
+                    print("미구현")
+                case "국제법무학과":
+                    print("미구현")
+                    // MARK: - 사회과학대학 fetch content
+                case "사회복지학부", "행정학부", "정치외교학과", "언론홍보학과":
+                    selectedContent = try document.getElementsByClass("td_box").html()
+                case "정보사회학과":
+                    selectedContent = try document.getElementsByClass("view_content").html()
+                case "평생교육학과":
+                    selectedContent = try document.getElementById("writeContents")!.html()
+                    // MARK: - 경제통상대학 fetch content
+                case "경제학과":
+                    selectedContent = try document.getElementById("bo_v_atc")!.html()
+                case "글로벌통상학과", "국제무역학과":
+                    selectedContent = try document.getElementsByClass("td_box").html()
+                case "금융경제학과":
+                    selectedContent = try document.getElementById("post-content")!.html()
+                    // MARK: - 경영대학 fetch content
+                case "경영학부":
+                    selectedContent = try document.getElementById("postContents")!.html()
+                case "벤처중소기업학과", "회계학과", "금융학부","혁신경영학과":
+                    selectedContent = try document.getElementsByClass("td_box").html()
+                case "벤처경영학과":
+                    selectedContent = try document.getElementsByClass("td_box").html()
+
                 default:
                     print("내용을 가져올 수 없습니다.")
                 }
